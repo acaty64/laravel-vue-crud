@@ -24899,6 +24899,7 @@ new Vue({
 	data: {
 		keeps: [],
 		newKeep: '',
+		fillKeep: { 'id': '', 'keep':'' },
 		errors: [],
 	},
 	methods: {
@@ -24908,6 +24909,19 @@ new Vue({
 				this.keeps = response.data
 			}); 
 		},
+		
+		editKeep: function (keep) {
+			this.fillKeep = {
+				'id': keep.id,
+				'keep': keep.keep
+			};
+			$('#edit').modal('show');
+		},
+
+		updateKeep: function (id) {
+			alert('updateKeep');
+		},
+
 		deleteKeep: function (keep) {
 			var url = 'tasks/' + keep.id ;
 			axios.delete(url).then(response => {  // Eliminamos
@@ -24915,6 +24929,7 @@ new Vue({
 				toastr.success('Eliminado correctamente registro: '+keep.id); // Enviamos el mensaje
 			});
 		},
+		
 		createKeep: function () {
 			var url = 'tasks';
 			axios.post(url, {
@@ -24928,6 +24943,7 @@ new Vue({
 			}).catch(error => {
 				this.errors = error.response.data;
 			});
-		}
+		},
+
 	},
 });
