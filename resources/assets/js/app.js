@@ -16,6 +16,7 @@ new Vue({
 		newKeep: '',
 		fillKeep: { 'id': '', 'keep':'' },
 		errors: [],
+		offset: 2, 
 	},
 
 	computed:{
@@ -23,13 +24,33 @@ new Vue({
 			return this.pagination.current_page;
 		},
 		pagesNumber: function () {
-			// body...
+			if(!this.pagination.to){
+				return [];
+			}
+
+			var from = this.pagination.current_page - offset;
+			if(from < 1){
+				from = 1;
+			}
+
+			var to = from + (offset * 2);
+			if(to > this.pagination.last_page){
+				to = this.pagination.last_page;
+			}
+
+			var pagesArray = [];
+			while(from <= to){
+				pagesArray.push(from);
+				from++;
+			}
+
+			return pagesArray;
 		}
 	},
 
 	methods: {
-		getKeeps: function () {
-			var urlKeeps = 'tasks';
+		getKeeps: function (page) {
+			var urlKeeps = 'tasks?page=' + page;
 			axios.get(urlKeeps).then(response => {
 				this.keeps = response.data.tasks.data,
 				this.pagination = response.data.pagination
@@ -81,5 +102,9 @@ new Vue({
 			});
 		},
 
+		changePage: function (page) {
+			this.pagination.current_page = page;
+			this.getKeeps(page);
+		}
 	},
 });
