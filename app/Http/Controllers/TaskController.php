@@ -16,7 +16,7 @@ class TaskController extends Controller
     {
 //        $tasks = Task::orderBy('id', 'DESC')->get();
 //        return $tasks;
-        $tasks = Task::orderBy('id', 'DESC')->paginate(2);
+        $tasks = Task::orderBy('id', 'DESC')->paginate(5);
 
         return [
             'pagination' => [

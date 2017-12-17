@@ -24921,12 +24921,12 @@ new Vue({
 				return [];
 			}
 
-			var from = this.pagination.current_page - offset;
+			var from = this.pagination.current_page - this.offset;
 			if(from < 1){
 				from = 1;
 			}
 
-			var to = from + (offset * 2);
+			var to = from + (this.offset * 2);
 			if(to > this.pagination.last_page){
 				to = this.pagination.last_page;
 			}
