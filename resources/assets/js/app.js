@@ -5,15 +5,34 @@ new Vue({
 	},
 	data: {
 		keeps: [],
+		pagination: {
+			'total'         :0,
+            'current_page'  :0,
+            'per_page'      :0,
+            'last_page'     :0,
+            'from'          :0,
+            'to'            :0,
+		},
 		newKeep: '',
 		fillKeep: { 'id': '', 'keep':'' },
 		errors: [],
 	},
+
+	computed:{
+		isActived: function () {
+			return this.pagination.current_page;
+		},
+		pagesNumber: function () {
+			// body...
+		}
+	},
+
 	methods: {
 		getKeeps: function () {
 			var urlKeeps = 'tasks';
 			axios.get(urlKeeps).then(response => {
-				this.keeps = response.data.tasks.data
+				this.keeps = response.data.tasks.data,
+				this.pagination = response.data.pagination
 			}); 
 		},
 		
